@@ -15,8 +15,8 @@ public class Bot2 extends Robot {
 	 * CAMBIAR ESTOS VALORES PARA GENERAR NUEVO PROBLEMA: SEMILLA Y OBSTACULOS HAY
 	 * QUE CAMBIAR TAMBIÉN EN CLASE BOT3 Y/O ROUTEFINDER!!!!!
 	 */
-	long semilla = 50;
-	int numObstaculos = 40;
+	long semilla = 100;
+	int numObstaculos = 20;
 	/***********************************************************************************/
 
 	int fila = 16;
