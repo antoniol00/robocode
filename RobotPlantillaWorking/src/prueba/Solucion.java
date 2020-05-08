@@ -1,16 +1,18 @@
 package prueba;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Solucion {
 	private Problema pr; // Problema del que se desea encontrar solucion
 	private List<Nodo> sol; // Lista donde se almacenan los Nodos solución en orden de ejecución
 	private Nodo meta; // Nodo que almacena información de la meta
-	private List<Nodo> cerrados; // Lista de nodos ya cerrados
+	private Set<Nodo> cerrados; // Conjunto de nodos ya cerrados
 	private Queue<Nodo> abiertos; // Cola de nodos abiertos
 	private int nodos_expandidos; // total de nodos que hemos necesitado expandir
 	private int nodos_abiertos; // total de nodos que hemos dejado abiertos
@@ -58,17 +60,17 @@ public class Solucion {
 
 		PriorityQueue<Nodo> abiertos = new PriorityQueue<Nodo>(new TreeSet<Nodo>());
 		abiertos.add(new Nodo(pr.getPosInicial().getFila(), pr.getPosInicial().getColumna(), pr)); // nodo inicial
-		List<Nodo> cerrados = new LinkedList<>();
+		Set<Nodo> cerrados = new HashSet<>();
 
 		while (!abiertos.isEmpty()) { // MIENTRAS QUE HAYA NODOS ABIERTOS...
 			Nodo actual = abiertos.poll(); // SACAMOS EL PRIMERO DE LA COLA
 			this.nodos_expandidos++;
+			cerrados.add(actual); // AÑADIMOS EL NODO A CERRADOS
 			if (actual.equals(meta)) { // SI ES LA META...
 				this.cerrados = cerrados;
 				this.abiertos = abiertos;
 				return muestraCamino(actual); // DEVOLVEMOS CAMINO SOLUCION
 			} else { // SI NO ES LA META...
-				cerrados.add(actual); // AÑADIMOS EL NODO A CERRADOS
 				Queue<Nodo> succesors = getSucesores(actual, pr, i); // CALCULAMOS SUCESORES
 				for (Nodo n : succesors) {
 					// AÑADIMOS DE ENTRE LOS SUCESORES, AQUELLOS QUE NO HAN SIDO CALCULADOS
@@ -76,7 +78,7 @@ public class Solucion {
 					if (!abiertos.contains(n) && !cerrados.contains(n)) {
 						abiertos.add(n);
 					}
-					if(abiertos.size() > this.nodos_abiertos) {
+					if (abiertos.size() > this.nodos_abiertos) {
 						nodos_abiertos = abiertos.size();
 					}
 				}
@@ -99,11 +101,11 @@ public class Solucion {
 		Casilla actual = node.getActual();
 
 		/**
-		 * Para cada nodo posible (ARRIBA, ABAJO, DERECHA, IZQUIERDA, ARRIBADERECHA, ARRIBAIZQUIERDA, ABAJODERECHA, ABAJOIZQUIERDA)...
-		 *  1. Verifica que que el movimiento sea a una casilla posible
-		 * 		2.1. Si estamos en Amplitud, añadimos el nodo sin heurística
-		 * 		2.2. Si estamos en Voraz, añadimos el nodo con heuristico voraz 
-		 * 		2.3. Si estamos en A*, añadimos el nodo con heuristico A*
+		 * Para cada nodo posible (ARRIBA, ABAJO, DERECHA, IZQUIERDA, ARRIBADERECHA,
+		 * ARRIBAIZQUIERDA, ABAJODERECHA, ABAJOIZQUIERDA)... 1. Verifica que que el
+		 * movimiento sea a una casilla posible 2.1. Si estamos en Amplitud, añadimos el
+		 * nodo sin heurística 2.2. Si estamos en Voraz, añadimos el nodo con heuristico
+		 * voraz 2.3. Si estamos en A*, añadimos el nodo con heuristico A*
 		 */
 
 		// arriba
@@ -265,7 +267,7 @@ public class Solucion {
 		return sol;
 	}
 
-	public List<Nodo> getCerrados() {
+	public Set<Nodo> getCerrados() {
 		return cerrados;
 	}
 
@@ -281,7 +283,8 @@ public class Solucion {
 		return nodos_abiertos;
 	}
 
-	//Devuelve el coste total, esto es, el coste acumulado del ultimo nodo de la solucion
+	// Devuelve el coste total, esto es, el coste acumulado del ultimo nodo de la
+	// solucion
 	public int getCoste_total() {
 		return this.getSol().get(this.getSol().size() - 1).getCoste();
 	}
