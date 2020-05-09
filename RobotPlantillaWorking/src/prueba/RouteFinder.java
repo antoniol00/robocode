@@ -17,6 +17,12 @@ public class RouteFinder {
 		 */
 		long semilla = 100;
 		int numObstaculos = 20;
+		/*
+		 * Para ejecutar HITO 2 (Definición de problema y robot que gira) => hito2 =
+		 * true Para ejecutar HITO 3 (Solución del problema y robot que simula) => hito2
+		 * = false
+		 */
+		boolean hito2 = false;
 		/***********************************************************************************/
 
 		// Creamos un mapa con los datos especificados
@@ -40,13 +46,6 @@ public class RouteFinder {
 		double gunCoolingRate = 1.0;
 		int sentryBorderSize = 50;
 		boolean hideEnemyNames = true;
-
-		/*
-		 * Para ejecutar HITO 2 (Definición de problema y robot que gira) => hito2 =
-		 * true Para ejecutar HITO 3 (Solución del problema y robot que simula) => hito2
-		 * = false
-		 */
-		boolean hito2 = false;
 
 		RobotSpecification[] modelRobots = null;
 
