@@ -1,7 +1,7 @@
 package prueba;
 
 public class Movimiento {
-	protected enum Move {
+	private enum Move {
 		IZQUIERDA, ARRIBA, ABAJO, DERECHA, ARRIBADERECHA, ARRIBAIZQUIERDA, ABAJODERECHA, ABAJOIZQUIERDA
 	}
 
