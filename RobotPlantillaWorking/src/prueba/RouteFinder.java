@@ -1,5 +1,7 @@
 package prueba;
 
+import java.util.Scanner;
+
 import robocode.control.BattleSpecification;
 import robocode.control.BattlefieldSpecification;
 import robocode.control.RobocodeEngine;
@@ -8,21 +10,65 @@ import robocode.control.RobotSpecification;
 
 public class RouteFinder {
 
+	private static long semilla;
+	private static int numObstaculos;
+
 	public static void main(String[] args) {
 
 		/***********************************************************************************/
-		/*
-		 * CAMBIAR ESTOS VALORES PARA GENERAR NUEVO PROBLEMA: SEMILLA Y OBSTACULOS HAY
-		 * QUE CAMBIAR TAMBIÉN EN CLASE BOT3 Y/O BOT 2!!!!!
-		 */
-		long semilla = 100;
-		int numObstaculos = 20;
-		/*
-		 * Para ejecutar HITO 2 (Definición de problema y robot que gira) => hito2 =
-		 * true Para ejecutar HITO 3 (Solución del problema y robot que simula) => hito2
-		 * = false
-		 */
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Indique el numero de semilla: ");
+		semilla = sc.nextLong();
+
+		System.out.print("Indique el numero de obstaculos: ");
+		numObstaculos = sc.nextInt();
+
+		String response = "";
+		while (response.equals("")) {
+			System.out.print(
+					"¿Desea que se resuelva el problema? [S]: Resolver problema [N]: Solo generarlo y visualizarlo\n");
+			response = sc.next();
+			if (!(response.equalsIgnoreCase("S") || response.equalsIgnoreCase("N"))) {
+				response = "";
+				System.out.println("Opcion incorrecta. Intentelo de nuevo...");
+			}
+		}
+
 		boolean hito2 = false;
+		int opcion = 0;
+		switch (response.toUpperCase()) {
+		case "S":
+			hito2 = false;
+			while (opcion == 0) {
+				System.out.println("Indique que algoritmo desea ejecutar:\n\t[1] AMPLITUD\n\t[2] VORAZ\n\t[3] A*\n");
+				opcion = sc.nextInt();
+				if (opcion < 1 || opcion > 3) {
+					opcion = 0;
+					System.out.println("Opcion incorrecta. Intentelo de nuevo...");
+				}
+			}
+			System.out.println("Cambie en clase Bot3 los valores de las variables para que queden del siguiente modo:");
+			System.out.println("public static long semilla = " + semilla);
+			System.out.println("public static int numObstaculos = " + numObstaculos);
+			System.out.println("public static int value = " + opcion);
+			System.out.println("\nPulse intro para continuar...");
+			Scanner sx = new Scanner(System.in);
+			sx.nextLine();
+			sx.close();
+			break;
+		case "N":
+			hito2 = true;
+			System.out.println("Cambie en clase Bot2 los valores de las variables para que queden del siguiente modo:");
+			System.out.println("long semilla = " + semilla);
+			System.out.println("int numObstaculos = " + numObstaculos);
+			System.out.println("\nPulse intro para continuar...");
+			Scanner sx2 = new Scanner(System.in);
+			sx2.nextLine();
+			sx2.close();
+		}
+
+		sc.close();
 		/***********************************************************************************/
 
 		// Creamos un mapa con los datos especificados

@@ -11,13 +11,10 @@ import robocode.Robot;
 public class Bot3 extends Robot {
 
 	/***********************************************************************************/
-	/*
-	 * CAMBIAR ESTOS VALORES PARA GENERAR NUEVO PROBLEMA: SEMILLA Y OBSTACULOS HAY
-	 * QUE CAMBIAR TAMBIÉN EN CLASE ROUTEFINDER Y/O BOT 2!!!!!
-	 */
-	private long semilla = 100;
-	private int numObstaculos = 20;
-	/***********************************************************************************/
+	public static long semilla = 99;
+	public static int numObstaculos = 27; 
+	public static int value = 3;
+	/*************************************************************************************/
 
 	private int fila = 16;
 	private int columna = 12;
@@ -25,7 +22,7 @@ public class Bot3 extends Robot {
 	private int filaPixels = 800;
 	private Problema pr;
 	private Solucion s1;
-
+	
 	public void run() {
 
 		pr = new Problema(semilla, fila, columna, numObstaculos);
@@ -38,14 +35,6 @@ public class Bot3 extends Robot {
 
 		// Orientamos inicialmente el robot hacia arriba
 		turnRight(normalRelativeAngleDegrees(0 - getHeading()));
-
-		/***********************************************************************************/
-		/*
-		 * SELECCION DE ALGORITMO A UTILIZAR, CAMBIANDO VALOR VARIABLE VALUE SEGÚN:
-		 * 1->SOLUCION AMPLITUD 2->SOLUCION VORAZ 3->SOLUCION A*
-		 */
-		int value = 3;
-		/*************************************************************************************/
 
 		s1 = new Solucion(pr, value);
 		String s = "";
@@ -67,10 +56,10 @@ public class Bot3 extends Robot {
 			int cont = 0;
 			for (Nodo e : s1.getSol()) { // recorrido por los nodos solucion
 				Movimiento m = new Movimiento(e.getMovimiento());
-				System.out.println(cont + "  [" + m.getSelected() + " : " + e.getPadre().getActual() + " -> "
+				System.out.println(cont + ".  [" + m.getSelected() + " : " + e.getPadre().getActual() + " -> "
 						+ e.getActual() + "]   ");
 				int grados = 0;
-				boolean dig = false;
+				boolean esDiag = false;
 				switch (m.getSelected()) { // seleccion de grados dado movimiento del nodo
 				case ARRIBA:
 					grados = 0;
@@ -86,28 +75,28 @@ public class Bot3 extends Robot {
 					break;
 				case ABAJODERECHA:
 					grados = 135;
-					dig = true;
+					esDiag = true;
 					break;
 				case ABAJOIZQUIERDA:
 					grados = 225;
-					dig = true;
+					esDiag = true;
 					break;
 				case ARRIBADERECHA:
 					grados = 45;
-					dig = true;
+					esDiag = true;
 					break;
 				case ARRIBAIZQUIERDA:
 					grados = 315;
-					dig = true;
+					esDiag = true;
 					break;
 				default:
 					grados = 0;
 				}
-				turnRight(normalRelativeAngleDegrees(grados - getHeading())); // movimiento robot
-				if (dig) {
-					ahead(Math.sqrt(2 * Math.pow(tamCelda, 2))); // si es diagonal, calcular distancia según Pitágoras
+				turnRight(normalRelativeAngleDegrees(grados - getHeading())); // movimiento giro robot
+				if (esDiag) {
+					ahead(Math.sqrt(2) * tamCelda); // avance en diagonal
 				} else {
-					ahead(tamCelda); // si no es diagonal, su movimiento es de tamCelda pixeles
+					ahead(tamCelda); // avance en linea recta
 				}
 				cont++;
 			}
@@ -120,14 +109,14 @@ public class Bot3 extends Robot {
 			super.turnLeft(90);
 		}
 	}
-
+	
 	/**
-	 * El método paint en Bot · pinta las casillas inicial y final, así como las
+	 * El método paint en Bot3 pinta las casillas inicial y final, así como las
 	 * cuadrículas, los nodos abiertos, cerrados y el camino solución. Incluye una
 	 * leyenda con los colores de cada una
 	 */
 	public void onPaint(Graphics2D g) {
-
+	
 		Casilla _final = pr.getPosFinal();
 		Casilla _inicial = pr.getPosInicial();
 		g.setFont(new Font("TimesNewRoman", Font.BOLD, 16)); // seleccion fuente
@@ -179,4 +168,5 @@ public class Bot3 extends Robot {
 		for (int i = 0; i < columna; i++)
 			g.drawLine(0, i * tamCelda + 1, filaPixels, i * tamCelda + 1);
 	}
+
 }

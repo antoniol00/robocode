@@ -11,12 +11,8 @@ import robocode.Robot;
 public class Bot2 extends Robot {
 
 	/***********************************************************************************/
-	/*
-	 * CAMBIAR ESTOS VALORES PARA GENERAR NUEVO PROBLEMA: SEMILLA Y OBSTACULOS HAY
-	 * QUE CAMBIAR TAMBIÉN EN CLASE BOT3 Y/O ROUTEFINDER!!!!!
-	 */
-	long semilla = 100;
-	int numObstaculos = 20;
+	long semilla = 92;
+	int numObstaculos = 23;
 	/***********************************************************************************/
 
 	int fila = 16;
