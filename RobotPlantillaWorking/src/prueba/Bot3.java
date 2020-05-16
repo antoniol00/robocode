@@ -11,8 +11,8 @@ import robocode.Robot;
 public class Bot3 extends Robot {
 
 	/***********************************************************************************/
-	public static long semilla = 99;
-	public static int numObstaculos = 27; 
+	public static long semilla = 63;
+	public static int numObstaculos = 27;
 	public static int value = 3;
 	/*************************************************************************************/
 
@@ -22,7 +22,7 @@ public class Bot3 extends Robot {
 	private int filaPixels = 800;
 	private Problema pr;
 	private Solucion s1;
-	
+
 	public void run() {
 
 		pr = new Problema(semilla, fila, columna, numObstaculos);
@@ -109,14 +109,14 @@ public class Bot3 extends Robot {
 			super.turnLeft(90);
 		}
 	}
-	
+
 	/**
 	 * El método paint en Bot3 pinta las casillas inicial y final, así como las
 	 * cuadrículas, los nodos abiertos, cerrados y el camino solución. Incluye una
 	 * leyenda con los colores de cada una
 	 */
 	public void onPaint(Graphics2D g) {
-	
+
 		Casilla _final = pr.getPosFinal();
 		Casilla _inicial = pr.getPosInicial();
 		g.setFont(new Font("TimesNewRoman", Font.BOLD, 16)); // seleccion fuente
